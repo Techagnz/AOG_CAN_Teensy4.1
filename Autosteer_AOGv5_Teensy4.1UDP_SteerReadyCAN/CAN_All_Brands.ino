@@ -29,7 +29,7 @@ if (Brand == 1){
   V_Bus.setFIFOFilter(1, 0x18EF1C32, EXT);  //Valtra Engage Message
   V_Bus.setFIFOFilter(2, 0x18EF1CFC, EXT);  //Mccormick Engage Message
   V_Bus.setFIFOFilter(3, 0x18EF1C00, EXT);  //MF Engage Message
-   V_Bus.setFIFOFilter(2, 0x18FF8306, EXT);  //Mccormick Engage Message TEST
+   V_Bus.setFIFOFilter(4, 0x18FF8306, EXT);  //Mccormick Engage Message TEST
   CANBUS_ModuleID = 0x1C;
   }  
 if (Brand == 2){
