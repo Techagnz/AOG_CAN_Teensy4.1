@@ -43,7 +43,8 @@ if (Brand == 3){
   }   
 if (Brand == 4){
   V_Bus.setFIFOFilter(0, 0x0CACAB13, EXT);  //JCB Curve Data & Valve State Message
-  V_Bus.setFIFOFilter(1, 0x18EFAB27, EXT);  //JCB engage message
+  V_Bus.setFIFOFilter(1, 0x0CEFAB27, EXT);  //JCB engage message icon
+  V_Bus.setFIFOFilter(2, 0x18EFAB27, EXT);  //JCB engage message
   CANBUS_ModuleID = 0xAB;
   }
 if (Brand == 5){
@@ -324,7 +325,7 @@ void VBus_Receive()
                 if (engageCAN == 1) digitalWrite(PWM2_RPWM, 1);       
             }
 
-            else if ((VBusReceiveData.buf[0]) == 39 && (VBusReceiveData.buf[2]) == 241)   //Ryan MR Models?
+            else if ((VBusReceiveData.buf[0]) == 39) //&& (VBusReceiveData.buf[2]) == 241)   //Ryan MR Models? Remove databuf2 read for stage5 new ATP software
             {
               engageCAN = bitRead(VBusReceiveData.buf[1],0);
               Time = millis();
@@ -447,7 +448,18 @@ void VBus_Receive()
                 steeringValveReady = (VBusReceiveData.buf[2]); 
             }
 
-            //**Engage Message**
+            //**Engage Message** ICON
+            if (VBusReceiveData.id == 0x0CEFAB27)
+            {
+                if ((VBusReceiveData.buf[0])== 15 && (VBusReceiveData.buf[1])== 96 && (VBusReceiveData.buf[2])== 1)
+                {
+                    Time = millis();
+                    digitalWrite(engageLED,HIGH); 
+                    engageCAN = 1;
+                    relayTime = ((millis() + 1000));
+                }
+            } 
+            //**Engage Message** Pre Icon
             if (VBusReceiveData.id == 0x18EFAB27)
             {
                 if ((VBusReceiveData.buf[0])== 15 && (VBusReceiveData.buf[1])== 96 && (VBusReceiveData.buf[2])== 1)
@@ -457,7 +469,8 @@ void VBus_Receive()
                     engageCAN = 1;
                     relayTime = ((millis() + 1000));
                 }
-            }    
+            } 
+               
    
         }//End Brand == 4  
 
