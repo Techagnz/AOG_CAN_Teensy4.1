@@ -500,7 +500,7 @@ void setupPVED() {
 
                 //65104
                 else if ((ConfigData.buf[2] == 0x50) && (ConfigData.buf[3] == 0xFE)) {
-                    Serial.print("SASA Present = ");
+                    Serial.print("WAS Channel = ");
                     Serial.print(ConfigData.buf[4], DEC);
                     Serial.println(" ");
                 }
@@ -758,6 +758,41 @@ void WriteParameters()
     V_Bus.write(msgP);
     
     delay(100);
+
+     // Change parameter 64101 to 255(Dec) SASA present
+    CAN_message_t msgP;
+    msgP.id = 0x98EF13FD;
+    msgP.flags.extended = true;
+    msgP.len = 8;
+    msgP.buf[0] = 0x0F;
+    msgP.buf[1] = 0xA2;
+    msgP.buf[2] = 0x4D;
+    msgP.buf[3] = 0xFE;
+    msgP.buf[4] = 0xFF;
+    msgP.buf[5] = 0x00;
+    msgP.buf[6] = 0x00;
+    msgP.buf[7] = 0x00;
+    V_Bus.write(msgP);
+
+    delay(100);
+
+ // Change parameter 1027 to 0(Dec) Speed steer amount, 0= none, 1000=full port flow
+    CAN_message_t msgP;
+    msgP.id = 0x98EF13FD;
+    msgP.flags.extended = true;
+    msgP.len = 8;
+    msgP.buf[0] = 0x0F;
+    msgP.buf[1] = 0xA2;
+    msgP.buf[2] = 0x04;
+    msgP.buf[3] = 0x03;
+    msgP.buf[4] = 0x00;
+    msgP.buf[5] = 0x00;
+    msgP.buf[6] = 0x00;
+    msgP.buf[7] = 0x00;
+    V_Bus.write(msgP);
+
+    delay(100);
+
     Serial.println("Sent parameter change request, make sure you send commit command next");
 }
 
