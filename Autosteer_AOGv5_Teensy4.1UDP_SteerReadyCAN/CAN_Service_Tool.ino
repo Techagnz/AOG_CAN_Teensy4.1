@@ -760,36 +760,36 @@ void WriteParameters()
     delay(100);
 
      // Change parameter 64101 to 255(Dec) SASA present
-    CAN_message_t msgP;
-    msgP.id = 0x98EF13FD;
-    msgP.flags.extended = true;
-    msgP.len = 8;
-    msgP.buf[0] = 0x0F;
-    msgP.buf[1] = 0xA2;
-    msgP.buf[2] = 0x4D;
-    msgP.buf[3] = 0xFE;
-    msgP.buf[4] = 0xFF;
-    msgP.buf[5] = 0x00;
-    msgP.buf[6] = 0x00;
-    msgP.buf[7] = 0x00;
-    V_Bus.write(msgP);
+    CAN_message_t msgsasa;
+    msgsasa.id = 0x98EF13FD;
+    msgsasa.flags.extended = true;
+    msgsasa.len = 8;
+    msgsasa.buf[0] = 0x0F;
+    msgsasa.buf[1] = 0xA2;
+    msgsasa.buf[2] = 0x4D;
+    msgsasa.buf[3] = 0xFE;
+    msgsasa.buf[4] = 0xFF;
+    msgsasa.buf[5] = 0x00;
+    msgsasa.buf[6] = 0x00;
+    msgsasa.buf[7] = 0x00;
+    V_Bus.write(msgsasa);
 
     delay(100);
 
  // Change parameter 1027 to 0(Dec) Speed steer amount, 0= none, 1000=full port flow
-    CAN_message_t msgP;
-    msgP.id = 0x98EF13FD;
-    msgP.flags.extended = true;
-    msgP.len = 8;
-    msgP.buf[0] = 0x0F;
-    msgP.buf[1] = 0xA2;
-    msgP.buf[2] = 0x04;
-    msgP.buf[3] = 0x03;
-    msgP.buf[4] = 0x00;
-    msgP.buf[5] = 0x00;
-    msgP.buf[6] = 0x00;
-    msgP.buf[7] = 0x00;
-    V_Bus.write(msgP);
+    CAN_message_t msgflow;
+    msgflow.id = 0x98EF13FD;
+    msgflow.flags.extended = true;
+    msgflow.len = 8;
+    msgflow.buf[0] = 0x0F;
+    msgflow.buf[1] = 0xA2;
+    msgflow.buf[2] = 0x04;
+    msgflow.buf[3] = 0x03;
+    msgflow.buf[4] = 0x00;
+    msgflow.buf[5] = 0x00;
+    msgflow.buf[6] = 0x00;
+    msgflow.buf[7] = 0x00;
+    V_Bus.write(msgflow);
 
     delay(100);
 
@@ -818,4 +818,3 @@ void Commit()
     delay(1000);
     Serial.println("Commiting data wait 1min, then turn Off PVED valve & restart");
 }
-
