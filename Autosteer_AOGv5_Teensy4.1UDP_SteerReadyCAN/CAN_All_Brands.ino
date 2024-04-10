@@ -101,7 +101,7 @@ if (Brand >= 0 && Brand <= 7){
   if (Brand == 0) msgISO.id = 0x18EEFF1E;       //Claas
   else if (Brand == 1) msgISO.id = 0x18EEFF1C;  //Massey, Valtra, ETC
   else if (Brand == 2) msgISO.id = 0x18EEFFAA;  //Case, Hew Holland
-  else if (Brand == 3) msgISO.id = 0x18EEFF2C;  //Fendt
+  else if (Brand == 3) msgISO.id = 0x18EEFF1C;  //Fendt
   else if (Brand == 4) msgISO.id = 0x18EEFFAB;  //JCB
   else if (Brand == 5) msgISO.id = 0x18EEFF2C;  //FendtOne
   else if (Brand == 6) msgISO.id = 0x18EEFFF0;  //Linder
@@ -602,7 +602,7 @@ void ISO_Receive()
   
       if (Brand == 3)
       {
-          if (ISOBusReceiveData.id == 0x18EF2CF0)   //**Fendt Engage Message**  
+          if (ISOBusReceiveData.id == 0x18EF1CC8)   //**Fendt Engage Message**  
           {
             if ((ISOBusReceiveData.buf[0])== 0x0F && (ISOBusReceiveData.buf[1])== 0x60 && (ISOBusReceiveData.buf[2])== 0x01){   
               digitalWrite(engageLED,HIGH); 
