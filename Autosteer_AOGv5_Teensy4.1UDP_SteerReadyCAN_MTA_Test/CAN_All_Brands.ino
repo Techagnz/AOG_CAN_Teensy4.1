@@ -61,7 +61,7 @@ if (Brand == 7){
   CANBUS_ModuleID = 0x1C;
   }   
 if (Brand == 8){
-    V_Bus.setFIFOFilter(0, 0x18EF1CF0, EXT);  //Cat MTxxx Curve data, valve state and engage messages
+    V_Bus.setFIFOFilter(0, 0x18EF1CF5, EXT);  //Cat MTxxx Curve data, valve state and engage messages
     CANBUS_ModuleID = 0x1C;
 }
   
@@ -281,7 +281,7 @@ else if (Brand == 7){
 }
     else if (Brand == 8) 
     {
-        VBusSendData.id = 0x1CEFF01C;
+        VBusSendData.id = 0x1CEFF51C;
         VBusSendData.flags.extended = true;
         VBusSendData.len = 8;
         VBusSendData.buf[0] = 0xF0;
