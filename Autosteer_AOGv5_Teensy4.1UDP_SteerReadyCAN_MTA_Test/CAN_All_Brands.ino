@@ -1,3 +1,4 @@
+// CAT MTA test Beeline address claim
 
 //  !! Set Brand via Service Tool (Serial Monitor) !! 
 //  0 = Claas (1E/30 Navagation Controller, 13/19 Steering Controller) - See Claas Notes on Service Tool Page
@@ -61,8 +62,8 @@ if (Brand == 7){
   CANBUS_ModuleID = 0x1C;
   }   
 if (Brand == 8){
-    V_Bus.setFIFOFilter(0, 0x18EF1CF5, EXT);  //Cat MTxxx Curve data, valve state and engage messages
-    CANBUS_ModuleID = 0x1C;
+    V_Bus.setFIFOFilter(0, 0x0CEFFF76, EXT);  //Cat MTxxx Curve data, valve state and engage messages
+    CANBUS_ModuleID = 0x2C;
 }
   
 // Claim V_Bus Address 
@@ -76,16 +77,16 @@ if (Brand >= 0 && Brand <= 8){
   else if (Brand == 5) msgV.id = 0x18EEFF2C;  //FendtONE
   else if (Brand == 6) msgV.id = 0x18EEFFF0;  //Linder
   else if (Brand == 7) msgV.id = 0x18EEFF1C;  //AgOpenGPS
-  else if (Brand == 8) msgV.id = 0x18EEFF1C;  //Cat MTxxx
+  else if (Brand == 8) msgV.id = 0x18EEFF2C;  //Cat MTxxx
   msgV.flags.extended = true;
   msgV.len = 8;
-  msgV.buf[0] = 0x00;
-  msgV.buf[1] = 0x00;
-  msgV.buf[2] = 0xC0;
-  msgV.buf[3] = 0x0C;
+  msgV.buf[0] = 0x29;
+  msgV.buf[1] = 0x27;
+  msgV.buf[2] = 0x8B;
+  msgV.buf[3] = 0x0E;
   msgV.buf[4] = 0x00;
   msgV.buf[5] = 0x17;
-  msgV.buf[6] = 0x02;
+  msgV.buf[6] = 0x00;
   msgV.buf[7] = 0x20;
   V_Bus.write(msgV);
 }
@@ -281,7 +282,7 @@ else if (Brand == 7){
 }
     else if (Brand == 8) 
     {
-        VBusSendData.id = 0x1CEFF51C;
+        VBusSendData.id = 0x0CEF762C;
         VBusSendData.flags.extended = true;
         VBusSendData.len = 8;
         VBusSendData.buf[0] = 0xF0;
