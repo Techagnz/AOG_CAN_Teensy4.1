@@ -80,13 +80,13 @@ if (Brand >= 0 && Brand <= 8){
   else if (Brand == 8) msgV.id = 0x18EEFF2C;  //Cat MTxxx
   msgV.flags.extended = true;
   msgV.len = 8;
-  msgV.buf[0] = 0x29;
-  msgV.buf[1] = 0x27;
-  msgV.buf[2] = 0x8B;
-  msgV.buf[3] = 0x0E;
+  msgV.buf[0] = 0x00;
+  msgV.buf[1] = 0x00;
+  msgV.buf[2] = 0xC0;
+  msgV.buf[3] = 0x0C;
   msgV.buf[4] = 0x00;
   msgV.buf[5] = 0x17;
-  msgV.buf[6] = 0x00;
+  msgV.buf[6] = 0x02;
   msgV.buf[7] = 0x20;
   V_Bus.write(msgV);
 }
@@ -516,7 +516,7 @@ void VBus_Receive()
 
         if (Brand == 8)
         {
-            if (VBusReceiveData.id == 0x18EF1CF0)
+            if (VBusReceiveData.id == 0x0CEFFF76)
             {
                 if ((VBusReceiveData.buf[0]) == 0xF0 && (VBusReceiveData.buf[1]) == 0x20)   //MT Curve & Status
                 {
