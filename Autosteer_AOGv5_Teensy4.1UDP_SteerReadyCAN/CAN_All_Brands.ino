@@ -626,7 +626,7 @@ void ISO_Receive()
             Serial.print(", DATA: ");
             for ( uint8_t i = 0; i < 8; i++ ) 
             {
-              Serial.print(ISOBusReceiveData.buf[i]); Serial.print(", ");
+              Serial.print(ISOBusReceiveData.buf[i], HEX); Serial.print(", ");
             }
   
             if (PGN == 44032) Serial.print("= Curvature Data");
