@@ -510,6 +510,8 @@ boolean intendToSteer = 0;        //Do We Intend to Steer?
       else if (Brand == 7) Serial.println("Brand = AgOpenGPS (Set Via Service Tool)");
       else if (Brand == 8) Serial.println("Brand = Cat MT Late (Set Via Service Tool)");
       else if (Brand == 9) Serial.println("Brand = Cat MT Early (Set Via Service Tool)");
+      else if (Brand == 10) Serial.println("Brand = CLAAS Q130200 (Set Via Service Tool)");
+      
       else Serial.println("No Tractor Brand Set, Set Via Service Tool");
 
       Serial.println("\r\nGPS Mode:");
@@ -622,8 +624,19 @@ boolean intendToSteer = 0;        //Do We Intend to Steer?
           }
           previous = reading;
 
+Serial.print("reading=");
+Serial.print(reading);
+Serial.print("   steerSwitch=");
+Serial.print(steerSwitch);
+Serial.print("   currentState=");
+Serial.print(currentState);
+Serial.print("   engageCAN=");
+Serial.print(engageCAN);
+Serial.print("   intendtosteer=");
+Serial.println(intendToSteer);
+
           //--------CAN CutOut--------------------------
-          if (steeringValveReady != 20 && steeringValveReady != 16)
+          if (steeringValveReady != 20 && steeringValveReady != 16 && reading ==1)
           {
               steerSwitch = 1; // reset values like it turned off
               currentState = 1;
@@ -1132,6 +1145,8 @@ void udpSteerRecv(int sizeToRead)
        else if (Brand == 6) Serial.println("Brand = Lindner (Set Via Service Tool)");
        else if (Brand == 7) Serial.println("Brand = AgOpenGPS (Set Via Service Tool)");
        else if (Brand == 8) Serial.println("Brand = Cat MT (Set Via Service Tool)");
+       else if (Brand == 9) Serial.println("Brand = Cat MT old (Set Via Service Tool)");
+       else if (Brand == 10) Serial.println("Brand = CLAAS Q130200 (Set Via Service Tool)");
        else Serial.println("No Tractor Brand Set, Set Via Service Tool");
 
        Serial.println("\r\nGPS Mode:");

@@ -68,9 +68,16 @@ if (Brand == 9) {
     V_Bus.setFIFOFilter(0, 0x0CEFFF76, EXT);  //Cat MTxxx Curve data, valve state and engage messages
     CANBUS_ModuleID = 0x2C;
 }
+if (Brand == 10){
+  V_Bus.setFIFOFilter(0, 0x0CAC1C13, EXT);  //CLAAS Q130200 Curve Data & Valve State and engage Message
+  V_Bus.setFIFOFilter(2, 0x1CFFE6D2, EXT);  //Claas Work Message (CEBIS Screen MR Models)
+  V_Bus.setFIFOFilter(1, 0x18EF1CD2, EXT);  //Claas Engage Message
+
+  CANBUS_ModuleID = 0x1C;
+  }  
   
 // Claim V_Bus Address 
-if (Brand >= 0 && Brand <= 9){
+if (Brand >= 0 && Brand <= 10){
   CAN_message_t msgV;
   if (Brand == 0) msgV.id = 0x18EEFF1E;       //Claas
   else if (Brand == 1) msgV.id = 0x18EEFF1C;  //Massey, Valtra, ETC
@@ -82,6 +89,7 @@ if (Brand >= 0 && Brand <= 9){
   else if (Brand == 7) msgV.id = 0x18EEFF1C;  //AgOpenGPS
   else if (Brand == 8) msgV.id = 0x18EEFF1C;  //Cat MTxxx Late
   else if (Brand == 9) msgV.id = 0x18EEFF2C;  //Cat MTxxx Early
+  else if (Brand == 10) msgV.id = 0x18EEFF1C;  //CLAAS Q130200
   msgV.flags.extended = true;
   msgV.len = 8;
   msgV.buf[0] = 0x00;
@@ -101,7 +109,7 @@ delay(500);
   ISO_Bus.setBaudRate(250000);
   ISO_Bus.enableFIFO();
 
-if (Brand >= 0 && Brand <= 9){
+if (Brand >= 0 && Brand <= 10){
   CAN_message_t msgISO;
   if (Brand == 0) msgISO.id = 0x18EEFF1E;       //Claas
   else if (Brand == 1) msgISO.id = 0x18EEFF1C;  //Massey, Valtra, ETC
@@ -113,6 +121,7 @@ if (Brand >= 0 && Brand <= 9){
   else if (Brand == 7) msgISO.id = 0x18EEFF1C;  //AgOpenGPS
   else if (Brand == 8) msgISO.id = 0x18EEFF1C;  //Cat MTxxx Late
   else if (Brand == 9) msgISO.id = 0x18EEFF2C;  //Cat MTxxx Early
+  else if (Brand == 10) msgISO.id = 0x18EEFF1C;  //CLAAS Q130200
   msgISO.flags.extended = true;
   msgISO.len = 8;
   msgISO.buf[0] = 0x00;
@@ -318,6 +327,22 @@ else if (Brand == 7){
         VBusSendData.buf[7] = 255;
         V_Bus.write(VBusSendData);
     }
+    else if (Brand == 10){
+    VBusSendData.id = 0x0CAD131C;
+    VBusSendData.flags.extended = true;
+    VBusSendData.len = 8;
+    VBusSendData.buf[0] = lowByte(setCurve);
+    VBusSendData.buf[1] = highByte(setCurve);
+    if (intendToSteer == 1 || steeringValveReady == 0x10 ) VBusSendData.buf[2] = 253;  // || steeringValveReady == 0x14
+   if (intendToSteer == 0)VBusSendData.buf[4] = 252;
+    //else VBusSendData.buf[2] = 252;
+    VBusSendData.buf[3] = 0;
+    VBusSendData.buf[4] = 0;
+    VBusSendData.buf[5] = 0;
+    VBusSendData.buf[6] = 0;
+    VBusSendData.buf[7] = 0;
+    V_Bus.write(VBusSendData);
+}
 }
 
 //---Receive V_Bus message
@@ -625,6 +650,29 @@ void VBus_Receive()
             }
 
         }//End Brand == 9
+
+        else if (Brand == 10)
+        {
+            //**Current Wheel Angle & Valve State**
+            if (VBusReceiveData.id == 0x0CAC1C13)
+            {        
+                estCurve = ((VBusReceiveData.buf[1] << 8) + VBusReceiveData.buf[0]);  // CAN Buf[1]*256 + CAN Buf[0] = CAN Est Curve 
+                steeringValveReady = (VBusReceiveData.buf[2]); 
+            } 
+  
+            //**Engage Message**
+            if (VBusReceiveData.id == 0x18EF1CD2)
+              {
+                engageCAN = bitRead(VBusReceiveData.buf[0],2);
+                Time = millis();
+                digitalWrite(engageLED,HIGH); 
+                relayTime = ((millis() + 1000));
+                //*****Turn saftey valve ON**********
+                if (engageCAN == 1) digitalWrite(PWM2_RPWM, 1); 
+                workCAN = bitRead(VBusReceiveData.buf[0],0);      
+               }              
+        }//End Brand == 10   
+
 
         if (ShowCANData == 1)
         {
