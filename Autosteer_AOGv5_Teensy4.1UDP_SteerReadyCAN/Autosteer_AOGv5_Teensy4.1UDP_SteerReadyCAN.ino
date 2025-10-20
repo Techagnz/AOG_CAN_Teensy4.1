@@ -45,7 +45,7 @@
 
 //----------------------------------------------------------
 
-String inoVersion = ("\r\nAgOpenGPS Tony UDP CANBUS Ver 04.05.2024");
+String inoVersion = ("\r\nAgOpenGPS Ryan UDP CANBUS Ver 20.10.2025");
 
   ////////////////// User Settings /////////////////////////  
 
@@ -624,16 +624,7 @@ boolean intendToSteer = 0;        //Do We Intend to Steer?
           }
           previous = reading;
 
-Serial.print("reading=");
-Serial.print(reading);
-Serial.print("   steerSwitch=");
-Serial.print(steerSwitch);
-Serial.print("   currentState=");
-Serial.print(currentState);
-Serial.print("   engageCAN=");
-Serial.print(engageCAN);
-Serial.print("   intendtosteer=");
-Serial.println(intendToSteer);
+
 
           //--------CAN CutOut--------------------------
           if (steeringValveReady != 20 && steeringValveReady != 16 && reading ==1)
@@ -836,7 +827,7 @@ void udpSteerRecv(int sizeToRead)
 	  {
 		  watchdogTimer = WATCHDOG_FORCE_VALUE; //turn off steering motor
 	  }
-      else if (Brand != 3 && gpsSpeed < 0.1 && Brand != 5)                //Speed < 0.1 and not Fendt
+      else if (Brand != 3 && gpsSpeed < 0.1 && Brand != 5 && Brand !=10)                //Speed < 0.1 and not Fendt
       {
         watchdogTimer = WATCHDOG_FORCE_VALUE; //turn off steering motor
       }   

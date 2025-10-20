@@ -8,6 +8,10 @@
 //  5 = FendtOne - Same as Fendt but 500kbs K-Bus.
 //  6 = Lindner (F0/240 Navagation Controller, 13/19 Steering Controller)
 //  7 = AgOpenGPS - Remote CAN/PWM module (1C/28 Navagation Controller, 13/19 Steering Controller)
+//  8 = Cat MT trac tractor Connected to ISOBUS tested on C series
+//  9 = Cat MT trac tractor older A and B series connected to tractor J1939
+//  10 = CLAAS thirdparty steering interface for machines with option Q130200
+
 
 //---Start Teensy CANBus Ports and Claim Addresses - If needed 
 
