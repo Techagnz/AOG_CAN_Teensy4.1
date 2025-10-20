@@ -98,12 +98,12 @@ if (Brand >= 0 && Brand <= 10){
   msgV.len = 8;
   msgV.buf[0] = 0x00;
   msgV.buf[1] = 0x00;
-  msgV.buf[2] = 0xC0;
-  msgV.buf[3] = 0x0C;
+  msgV.buf[2] = 0x80;
+  msgV.buf[3] = 0x0E;
   msgV.buf[4] = 0x00;
   msgV.buf[5] = 0x17;
-  msgV.buf[6] = 0x02;
-  msgV.buf[7] = 0x20;
+  msgV.buf[6] = 0x00;
+  msgV.buf[7] = 0xA0;
   V_Bus.write(msgV);
 }
 delay(500);
@@ -337,9 +337,8 @@ else if (Brand == 7){
     VBusSendData.len = 8;
     VBusSendData.buf[0] = lowByte(setCurve);
     VBusSendData.buf[1] = highByte(setCurve);
-    if (intendToSteer == 1 || steeringValveReady == 0x10 ) VBusSendData.buf[2] = 253;  // || steeringValveReady == 0x14
-   if (intendToSteer == 0)VBusSendData.buf[4] = 252;
-    //else VBusSendData.buf[2] = 252;
+    if (intendToSteer == 1 || steeringValveReady == 0x10 ) VBusSendData.buf[2] = 0x0D;
+    if (intendToSteer == 0)VBusSendData.buf[4] = 0x0C;
     VBusSendData.buf[3] = 0;
     VBusSendData.buf[4] = 0;
     VBusSendData.buf[5] = 0;
