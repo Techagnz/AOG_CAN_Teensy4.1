@@ -783,8 +783,8 @@ void WriteParameters()
     msgflow.len = 8;
     msgflow.buf[0] = 0x0F;
     msgflow.buf[1] = 0xA2;
-    msgflow.buf[2] = 0x04;
-    msgflow.buf[3] = 0x03;
+    msgflow.buf[2] = 0x03;
+    msgflow.buf[3] = 0x04;
     msgflow.buf[4] = 0x00;
     msgflow.buf[5] = 0x00;
     msgflow.buf[6] = 0x00;
@@ -818,3 +818,4 @@ void Commit()
     delay(1000);
     Serial.println("Commiting data wait 1min, then turn Off PVED valve & restart");
 }
+
